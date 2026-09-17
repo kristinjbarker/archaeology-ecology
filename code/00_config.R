@@ -1,12 +1,24 @@
+
+#### USER-SPECIFIC INFO (FILE PATHS ETC) ####
+
+    # GRASS software location, for calculating solar radiation
+    osgeo4w_root <- "C:/Users/Kristin/AppData/Local/Programs/OSGeo4W"
+
+
 #### PACKAGES ####
 
     ## (list needed; install missing; load all)
     packages <- c(
+      "here", # id root folder
       "lubridate", # datetimes
       "cowplot", # muti-panel plotting
       "sf", # tidy spatdat
       "stringr", # cleaning names etc
       "skimr",  # wrangling data
+      "terra", # raster data
+      "fs", # something spatial
+      "spatialEco", # circular tpi
+      "rgrass", # solar radiation
       "tidyverse") # life
     ipak <- function(pkg){
       new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
@@ -15,13 +27,18 @@
       sapply(pkg, require, character.only = TRUE)
     }    
     ipak(packages) ; rm(ipak, packages)
-    
 
+    
 #### DATA INFO ####
 
     # spatial projections  
-    crs_ungulates <- 32157 # NAD83 / Wyoming West Central
+    ll <- "EPSG:4326"   # WGS 84 geographic (lon/lat, degrees)
+    utm <- "EPSG:3742"   # NAD83(HARN) / UTM zone 12N (meters)
+    
 
+    # projections of data
+    crs_arch <- ll
+    crs_ung <- utm
 
 
 #### COMMON UNIT CONVERSIONS ####
@@ -33,7 +50,6 @@
     mi2km <- function(mis) {
       return(mis/0.6213712)
     }
-    
     
     
 #### FUNCTIONS ####
