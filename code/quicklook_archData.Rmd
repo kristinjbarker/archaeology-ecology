@@ -1,0 +1,96 @@
+---
+title: "Archaeology Data"
+author: "Kristin Barker"
+date: "2026-07-13"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(kableExtra)
+
+setwd(rprojroot::find_rstudio_root_file())
+source("code/00_config.R")
+rawArch <- read.csv("data/raw/archaeology/inventory-latePrehistoric/arch-inventory-data.csv")
+defs <- read.csv("data/raw/archaeology/inventory-latePrehistoric/datadictionary-tidy.csv")
+
+```
+
+## Raw number summaries
+
+
+#### Items
+```{r items, echo = FALSE, message = FALSE, warning = FALSE}
+
+# Class (type of material)
+var <- "EL"
+knitr::kable(rawArch %>%
+  count(.data[[var]], .drop = FALSE) %>%
+  left_join(
+    defs %>%
+      filter(name == var) %>%
+      select(type, typeDefinition),
+    by = setNames("type", var)
+  ) %>%
+  rename(Definition = typeDefinition)
+)
+
+```
+
+#### Materials
+```{r materials, echo = FALSE, message = FALSE, warning = FALSE}
+
+
+# Class (type of material)
+var <- "CL"
+knitr::kable(rawArch %>%
+  count(.data[[var]], .drop = FALSE) %>%
+  left_join(
+    defs %>%
+      filter(name == var) %>%
+      select(type, typeDefinition),
+    by = setNames("type", var)
+  ) %>%
+  rename(Definition = typeDefinition)
+)
+
+```
+
+
+#### Obsidian sources
+```{r obsidianSources, echo = FALSE, message = FALSE, warning = FALSE}
+
+
+# Class (type of material)
+var <- "OB_SR"
+
+knitr::kable(rawArch %>%
+  count(.data[[var]], .drop = FALSE) %>%
+  left_join(
+    defs %>%
+      filter(name == var,
+             typeDefinition == "obsidian") %>%
+      select(type, typeDefinition),
+    by = setNames("type", var)
+  ) %>%
+  rename(Definition = typeDefinition)
+)
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

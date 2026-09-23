@@ -1,0 +1,34 @@
+---
+title: "Bighorn data"
+author: "Kristin Barker"
+date: "2026-08-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(tidyverse)
+
+setwd(rprojroot::find_rstudio_root_file())
+source("code/00_config.R")
+rawSheep <- st_read("data/raw/wildlife/bighorn/BHS_AllData_121517.shp")
+
+
+```
+
+## Check format for Migration Mapper
+
+
+#### Datetimes
+```{r items, echo = FALSE, message = FALSE, warning = FALSE}
+
+names(rawSheep)
+head(rawSheep)
+
+```
+WGFD didn't keep the timestamps in the data; incompatible with Migration Mapper. Not mapping bighorn migration lines for now.
