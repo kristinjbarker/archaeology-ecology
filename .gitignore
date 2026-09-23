@@ -7,9 +7,12 @@
 # ---- Data (authoritative data should be rebuildable) ----
 data/raw/*
 data/processed/*
+data/intermediate/*
 !data/raw/README.md
 
 # ---- Exported products ----
+code/*.html
+code/*.pdf
 docs/*
 images/*
 presentations/*
@@ -17,6 +20,7 @@ zOldMisc/*
 
 # ---- ArcGIS Pro ----
 mapping/**/*.gdb/
+mapping/**/GpMessages/
 mapping/**/ImportLog/
 mapping/**/Index/
 mapping/**/Logs/
