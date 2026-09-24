@@ -220,6 +220,9 @@ run_solar_resolution_benchmark <- function(
     if (!is.null(status) && status != 0) stop(module, " failed with status ", status)
     ans
   }
+  # Synchronize region projection metadata with the EPSG:3742 project CRS.
+  timed("shared", "synchronize_grass_crs", grass("g.proj",
+    flags = "c", parameters = list(epsg = 3742)))
   writeLines(grass("g.version", flags = "g", intern = TRUE),
              out("logs", "grass_version.txt"))
   cores <- list()
